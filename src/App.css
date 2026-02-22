@@ -1,0 +1,106 @@
+/* === Global Layout === */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+}
+
+/* Center Wrapper */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card */
+.card {
+  width: 420px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 14px;
+  border: 1px solid #e6e9ef;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Title */
+.card h2 {
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
+/* Input */
+input {
+  width: stretch;
+  height: 44px;
+  padding: 0 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1b4dff;
+  box-shadow: 0 0 0 2px rgba(27, 77, 255, 0.15);
+}
+
+/* Button */
+button {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.primary-btn {
+  background: #1b4dff;
+  color: white;
+}
+
+.primary-btn:hover {
+  background: #153ecc;
+}
+
+.outline-btn {
+  background: white;
+  border: 1px solid #d1d5db;
+}
+
+.outline-btn:hover {
+  background: #f3f4f6;
+}
+
+/* Badge */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.success {
+  background: rgba(0, 168, 107, 0.1);
+  color: #00a86b;
+}
+
+.warning {
+  background: rgba(244, 180, 0, 0.1);
+  color: #f4b400;
+}
+
+.error {
+  background: rgba(211, 47, 47, 0.1);
+  color: #d32f2f;
+}

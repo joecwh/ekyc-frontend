@@ -1,42 +1,238 @@
-# ekyc-frontend
+# 🛡 eKYC Backend System
 
-This template should help get you started developing with Vue 3 in Vite.
+A secure Electronic Know Your Customer (eKYC) backend system built with Spring Boot.
+This system supports user registration, KYC submission, document upload, automated review flow, and admin decision handling.
 
-## Recommended IDE Setup
+---
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+# 🎥 Demo Video
 
-## Recommended Browser Setup
+> 📌 Demo video link (to be added)
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```
+[Watch Demo Video Here](https://your-demo-link.com)
 ```
 
-### Compile and Hot-Reload for Development
+---
 
-```sh
-npm run dev
+# 📌 Project Overview
+
+This project simulates a real-world fintech KYC workflow including:
+
+* User account creation
+* KYC submission process
+* Secure document upload (IC Front, IC Back, Selfie)
+* Risk scoring support
+* Admin review & decision handling
+* Local file storage system
+* Status-driven workflow control
+
+The system is designed to mimic compliance-grade identity verification flows.
+
+---
+
+# 🏗 System Architecture
+
+```
+User → Submit KYC → Upload Documents → Submit
+        ↓
+Admin → Acknowledge → Decision (Approve / Reject / Retry / Manual Review)
 ```
 
-### Type-Check, Compile and Minify for Production
+---
 
-```sh
-npm run build
+# 🚀 Features
+
+## 👤 User Side
+
+* JWT Authentication
+* Profile management
+* KYC submission
+* Upload multiple documents
+* Status tracking
+* Retry support when required
+
+## 🛠 Admin Side (Postman Simulation)
+
+* Get KYC list by status
+* Acknowledge KYC
+* Approve
+* Reject (with remark required)
+* Mark for manual review
+* Set retry required
+* Stream uploaded documents securely
+
+---
+
+# 🧠 KYC Status Flow
+
+| Status         | Description                    |
+| -------------- | ------------------------------ |
+| DRAFT          | User started but not submitted |
+| SUBMITTED      | User submitted KYC             |
+| PROCESSING     | Under automated review         |
+| MANUAL_REVIEW  | Requires human verification    |
+| APPROVED       | KYC approved                   |
+| REJECTED       | Permanently rejected           |
+| RETRY_REQUIRED | User must fix and resubmit     |
+| EXPIRED        | Request expired                |
+
+---
+
+# 🗂 File Storage
+
+Uploaded files are stored locally:
+
 ```
+uploads/
+└── kyc/
+    └── {userId}/
+        ├── front.png
+        ├── back.png
+        └── selfie.png
+```
+
+Database stores only relative file paths.
+
+Admin retrieves files using:
+
+```
+GET /api/admin/file?path=kyc/{userId}/filename.png
+```
+
+---
+
+# 🛠 Tech Stack
+
+* Java 21
+* Spring Boot
+* Spring Security (JWT)
+* Hibernate / JPA
+* SQL Server
+* Local File Storage
+* Postman (Admin simulation)
+
+---
+
+# 🔐 Authentication
+
+JWT-based authentication.
+
+Protected endpoints require:
+
+```
+Authorization: Bearer <token>
+```
+
+---
+
+# 📡 API Endpoints
+
+## User
+
+```
+POST   /api/auth/login
+GET    /api/users
+POST   /api/kyc/start
+POST   /api/kyc/upload
+POST   /api/kyc/submit
+```
+
+## Admin
+
+```
+GET    /api/admin?status=SUBMITTED
+POST   /api/admin/kyc/ack/{kycId}
+POST   /api/admin/kyc/decision/{kycId}
+GET    /api/admin/file?path=...
+```
+
+---
+
+# 📬 Example Decision Request
+
+```json
+{
+  "decision": "APPROVED",
+  "remark": null,
+  "riskLevel": "LOW",
+  "riskScore": 12.5,
+  "providerRefId": "PROV-123"
+}
+```
+
+Allowed decisions:
+
+* APPROVED
+* REJECTED
+* RETRY_REQUIRED
+* MANUAL_REVIEW
+
+---
+
+# 🏁 Running The Project
+
+## 1️⃣ Configure Database
+
+Update `application.yml`:
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=ekycDB
+```
+
+## 2️⃣ Run Application
+
+```
+mvn spring-boot:run
+```
+
+Application runs at:
+
+```
+http://localhost:8080
+```
+
+---
+
+# 📦 Project Structure
+
+```
+domain/         → Entities & Enums
+application/    → DTO & Services
+infrastructure/ → Repositories & Storage
+controller/     → REST Controllers
+security/       → JWT & Security Config
+```
+
+---
+
+# 🔮 Future Improvements
+
+* Add role-based admin system
+* Add audit trail table
+* Integrate third-party AI provider
+* Move file storage to AWS S3
+* Add frontend admin dashboard
+* Add rate limiting & IP tracking
+* Add transaction history logging
+
+---
+
+# 🏆 Key Learning Points
+
+* Secure JWT implementation
+* Controlled status transition design
+* File storage abstraction
+* Clean DTO separation
+* Transactional service handling
+* State-based validation logic
+
+---
+
+# 📄 License
+
+This project is for demonstration and educational purposes.
+
+
